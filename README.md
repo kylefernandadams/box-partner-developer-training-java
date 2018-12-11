@@ -1,29 +1,28 @@
-Box UI Elements React Redux Blueprint
+Box Partner Developer Training
 =====================================
-This is a Box UI Elements starter project that levarages the [box-node-sdk](https://github.com/box/box-node-sdk) with an express backend, React frontend, and Redux for managing state.
+This is project is used during Box partner developer enablement session. It provides code examples in Java around numerous endpoints ranging from authentication to basic content services to governance services.
 
-Installation Instructions
+
+Setup
 -------------------------
 1) Clone the repo.
 ```
-git clone https://github.com/kylefernandadams/box-ui-elements-react-redux-blueprint.git
+git clone https://github.com/kylefernandadams/box-partner-developer-training-java.git
 ```
-2) Create a Box Developer Application with [JWT authentication](https://developer.box.com/docs/setting-up-a-jwt-app#section-step-1-create-and-configure-a-jwt-application).
-3) [Generated a Public/Private Keypair](https://developer.box.com/docs/setting-up-a-jwt-app#section-use-an-application-config-file).
-
-4) [Rename the .json file](https://developer.box.com/docs/setting-up-a-jwt-app#section-use-an-application-config-file) to box_config.json
-and move it to the [box-ui-elements-react-redux-blueprint/server](https://github.com/kylefernandadams/box-ui-elements-react-redux-blueprint/tree/master/server) folder.
-5) Add `http://localhost:3000` to the CORS Domains' Allowed Origins section and save.
-6) In the Box Admin Console (separate from the Dev Console), [authorize your JWT application](https://developer.box.com/docs/setting-up-a-jwt-app#section-step-3-grant-access-for-the-application-in-your-enterprise)
-7) Change directory to `box-ui-elements-react-redux-blueprint` directory.
+2) Create a new 3-legged OAuth Box Developer Application using the following [instructions](https://developer.box.com/docs/setting-up-an-oauth-app).
+  * Set the redirect URI to: `https://localhost:8081/box/auth/oauth/redirect`
+  * Get the `BOX_CLIENT_ID` value from the application configuration and set it in the [BoxOAuth2Authentication.java class](/src/main/com/box/developer/training/exercise1/BoxOAuth2Authentication.java#L18)
+  * Get the `BOX_CLIENT_SECRET` value from the application configuration and set it in the [BoxOAuth2Authentication.java class](/src/main/com/box/developer/training/exercise1/BoxOAuth2Authentication.java#L19)
+3) Create a new JWT Box developer application with the following [instructions](https://developer.box.com/docs/setting-up-a-jwt-app).
+  * Take the automatically generated public/private key pair json file and copy it to the [/resources project directory](/src/resources).
+  * Rename the json file to `box_config.json`.
+  * Add `http://localhost:8080` to the CORS Domains' Allowed Origins configuration of the application configuration.
+4) Build the project using Maven.
 ```
-cd /box-ui-elements-react-redux-blueprint
+mvn clean package
 ```
-8) Install the client tier and server tier dependencies.
+5) Run Spring Boot
 ```
-yarn install-all
+mvn spring-boot:run
 ```
-9) Start the project.
-```
-yarn dev
-```
+6) Confirm the application is running by navigating to the [/box endpoint](http://localhost:8081/box)
